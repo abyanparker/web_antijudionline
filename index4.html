@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetFree - Video Call</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* --- CSS Global & Setup --- */
+        :root {
+            --primary-blue: #007bff;
+            --text-dark: #222;
+            --text-gray: #6a6a6a;
+            --background-light: #ffffff;
+            --background-main: #fcfcfc; /* Warna latar belakang umum */
+            --background-call-area: #f8f8f4; /* Warna krem/soft yellow untuk area video */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-main);
+        }
+
+        /* --- 1. Navigation Bar --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            border-bottom: 1px solid #eee;
+            background-color: var(--background-light);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 15px;
+            padding: 5px 0;
+            transition: color 0.2s;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-icons .icon-circle {
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+        
+        .nav-icons .avatar img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        /* --- 2. Main Video Call Area --- */
+        .call-area {
+            background-color: var(--background-call-area); 
+            min-height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .phone-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* Styling untuk bingkai HP */
+        .phone-frame {
+            position: absolute;
+            height: 80%; /* Tinggi bingkai HP */
+            width: 300px; /* Lebar bingkai HP */
+            background-color: black;
+            border-radius: 40px;
+            box-shadow: 0 0 0 10px #222;
+        }
+
+        .phone-frame-left {
+            left: calc(50% - 300px); /* Posisikan di kiri tengah */
+            opacity: 0.5;
+            transform: scale(0.8) translateX(-100px); /* Efek di luar fokus */
+        }
+        
+        .phone-frame-right {
+            right: calc(50% - 300px); /* Posisikan di kanan tengah */
+            opacity: 0.5;
+            transform: scale(0.8) translateX(100px); /* Efek di luar fokus */
+        }
+        
+        /* Area Video Aktif di Tengah */
+        .active-video-area {
+            position: absolute;
+            background-color: var(--background-light);
+            width: 350px; /* Ukuran video utama */
+            height: 400px; 
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 2;
+        }
+
+        .active-video-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Gambar di desain nampak sedikit diperbesar dan dipotong */
+            transform: scale(1.1); 
+        }
+
+        /* Tombol Play (di tengah gambar) */
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 3;
+        }
+        
+        .play-button i {
+            color: var(--text-dark);
+            font-size: 24px;
+            margin-left: 5px;
+        }
+
+        /* Lingkaran Merah di bawah Video */
+        .red-circle {
+            position: absolute;
+            bottom: 30px; 
+            width: 40px;
+            height: 40px;
+            background-color: red;
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+
+        /* --- 3. Call Controls (Tombol Bawah) --- */
+        .call-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            gap: 15px;
+            background-color: var(--background-light);
+        }
+
+        .end-call-button {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .end-call-button:hover {
+            background-color: #0056b3;
+        }
+
+        .mute-button {
+            background-color: #f0f0f0; 
+            color: var(--text-dark);
+            border: none;
+            padding: 12px 40px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .mute-button:hover {
+            background-color: #e0e0e0;
+        }
+
+
+        /* --- Responsiveness (Sederhana) --- */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .phone-frame-left, .phone-frame-right {
+                display: none; /* Sembunyikan bingkai samping di mobile */
+            }
+
+            .active-video-area {
+                width: 90%;
+                height: 300px;
+                position: static;
+                margin: 20px 0;
+            }
+            
+            .red-circle {
+                display: none;
+            }
+
+            .call-area {
+                min-height: 70vh;
+            }
+
+            .end-call-button, .mute-button {
+                padding: 12px 20px;
+                flex-grow: 1;
+            }
+            
+            .call-controls {
+                padding: 15px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">BetFree</div>
+        <nav class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+        <div class="nav-icons">
+            <div class="icon-circle"><i class="fas fa-clock"></i></div>
+            <div class="avatar"><img src="https://via.placeholder.com/35/f7e0d7" alt="User Avatar"></div>
+        </div>
+    </header>
+
+    <main class="call-area">
+        <div class="phone-container">
+            <div class="phone-frame phone-frame-left"></div>
+            
+            <div class="phone-frame phone-frame-right"></div>
+            
+            <div class="active-video-area">
+                <img src="https://via.placeholder.com/400x400/ffffff/000000?text=Video+Call" alt="Video Feed">
+                
+                <div class="play-button">
+                     <i class="fas fa-play"></i>
+                </div>
+            </div>
+
+            <div class="red-circle"></div>
+        </div>
+    </main>
+
+    <section class="call-controls">
+        <button class="end-call-button">End Call</button>
+        <button class="mute-button">Mute</button>
+    </section>
+
+</body>
+</html>

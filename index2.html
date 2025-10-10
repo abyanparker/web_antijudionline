@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetFree - Our Expert Consultants</title>
+    <style>
+        /* --- CSS Global & Setup --- */
+        :root {
+            /* Warna diambil dari desain */
+            --primary-blue: #007bff; /* Biru untuk tombol utama */
+            --text-dark: #222;
+            --text-gray: #6a6a6a;
+            --background-light: #ffffff;
+            --card-bg-light: #fefefe;
+            --border-color: #eee;
+            --image-bg-color: #f7e0d7; /* Warna latar belakang gambar untuk efek bingkai */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif; /* Menggunakan font basic yang bersih */
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* --- 1. Navigation Bar (Header) --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--background-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800; /* Ekstra bold untuk logo */
+            color: var(--text-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 15px;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .cta-button {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- 2. Consultants Section Header --- */
+        .consultants-section {
+            padding: 50px 0;
+        }
+
+        .section-header {
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+
+        .section-header h1 {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            max-width: 90%;
+        }
+
+        /* --- 3. Consultant Cards List --- */
+        .consultant-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .consultant-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px 25px 25px 0; /* Padding di kiri lebih sedikit */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .consultant-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .consultant-info {
+            flex-grow: 1;
+            padding-left: 25px; /* Jarak dari kiri kartu */
+        }
+
+        .consultant-info h2 {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .consultant-info .title {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .profile-button {
+            background-color: transparent;
+            color: var(--text-gray);
+            border: 1px solid #ccc;
+            padding: 8px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .profile-button:hover {
+            background-color: #f0f0f0;
+            border-color: #aaa;
+            color: var(--text-dark);
+        }
+
+        .consultant-image {
+            width: 250px; /* Ukuran yang cukup besar seperti desain */
+            height: 150px; 
+            overflow: hidden;
+            border-radius: 0 4px 4px 0; /* Hanya sisi kanan yang melengkung */
+            background-color: var(--image-bg-color); 
+        }
+
+        .consultant-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* --- Media Queries (Responsif) --- */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none; /* Sembunyikan link nav di tablet/mobile */
+            }
+
+            .cta-button {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .section-header h1 {
+                font-size: 30px;
+            }
+
+            .consultant-card {
+                flex-direction: column-reverse; /* Gambar di atas info di mobile */
+                align-items: flex-start;
+                padding: 20px;
+            }
+
+            .consultant-info {
+                padding-left: 0;
+                margin-top: 20px;
+            }
+
+            .consultant-image {
+                width: 100%;
+                height: 180px;
+                border-radius: 4px; /* Sudut normal di mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">BetFree</div>
+        <nav class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+        <a href="#" class="cta-button">Book a Consultation</a>
+    </header>
+
+    <main class="consultants-section">
+        <div class="container">
+            <div class="section-header">
+                <h1>Our Expert Consultants</h1>
+                <p>Meet our team of experienced consultants specializing in online gambling addiction. Each consultant brings a unique set of skills and a deep understanding of the challenges faced by individuals struggling with online gambling. Browse their profiles to find the right support for your journey to recovery.</p>
+            </div>
+
+            <div class="consultant-list">
+                
+                <div class="consultant-card">
+                    <div class="consultant-info">
+                        <h2>Dr. Anya Sharma</h2>
+                        <p class="title">Clinical Psychologist</p>
+                        <button class="profile-button">View Profile</button>
+                    </div>
+                    <div class="consultant-image">
+                        <img src="Screenshot 2025-10-09 193920.png" alt="Dr. Anya Sharma"> 
+                    </div>
+                </div>
+                
+                <div class="consultant-card">
+                    <div class="consultant-info">
+                        <h2>Mr. Ben Carter</h2>
+                        <p class="title">Certified Addiction Counselor</p>
+                        <a href="index3.html"><button class="profile-button">View Profile</button></a>
+                    </div>
+                    <div class="consultant-image">
+                        <img src="Screenshot 2025-10-09 193932.png" alt="Mr. Ben Carter"> 
+                    </div>
+                </div>
+                
+                <div class="consultant-card">
+                    <div class="consultant-info">
+                        <h2>Ms. Chloe Davis</h2>
+                        <p class="title">Licensed Mental Health Counselor</p>
+                        <button class="profile-button">View Profile</button>
+                    </div>
+                    <div class="consultant-image">
+                        <img src="Screenshot 2025-10-09 193920.png" alt="Ms. Chloe Davis"> 
+                    </div>
+                </div>
+
+                <div class="consultant-card">
+                    <div class="consultant-info">
+                        <h2>Mr. Ethan Walker</h2>
+                        <p class="title">Recovery Coach</p>
+                        <button class="profile-button">View Profile</button>
+                    </div>
+                    <div class="consultant-image">
+                        <img src="Screenshot 2025-10-09 193932.png" alt="Mr. Ethan Walker"> 
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

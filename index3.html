@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetFree - Konsultan & Profil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* --- CSS GLOBAL & RESET --- */
+        :root {
+            --primary-blue: #007bff;
+            --text-dark: #222;
+            --text-gray: #6a6a6a;
+            --background-light: #ffffff;
+            --background-gray-soft: #f8f9fa; /* Lebih ringan dari f0f0f0 */
+            --border-color: #eee;
+            --image-bg-color: #f7e0d7; 
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* ---------------------------------------------------------------------- */
+        /* --- A. CSS UNTUK HALAMAN KONSULTAN (DESAIN 1) --- */
+        /* ---------------------------------------------------------------------- */
+
+        /* A.1. Navigation Bar (Header) */
+        .navbar-consultant {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--background-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-consultant .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .navbar-consultant .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 15px;
+            margin-left: 30px;
+            transition: color 0.2s;
+        }
+        
+        .navbar-consultant .cta-button {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* A.2. Consultants Section Header */
+        .consultants-section {
+            padding: 50px 0;
+        }
+
+        .consultants-section .section-header {
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+
+        .consultants-section .section-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .consultants-section .section-header p {
+            font-size: 16px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            max-width: 90%;
+        }
+
+        /* A.3. Consultant Cards List */
+        .consultant-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .consultant-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--background-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px 15px 15px 25px; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+        }
+
+        .consultant-info {
+            flex-grow: 1;
+        }
+
+        .consultant-info h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .consultant-info .title {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .consultant-info .profile-button {
+            background-color: transparent;
+            color: var(--text-dark);
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .consultant-info .profile-button:hover {
+            background-color: var(--background-gray-soft);
+        }
+
+        .consultant-image {
+            width: 250px; 
+            height: 150px; 
+            overflow: hidden;
+            border-radius: 4px;
+            background-color: var(--image-bg-color); 
+            margin-left: 20px;
+        }
+
+        .consultant-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ---------------------------------------------------------------------- */
+        /* --- B. CSS UNTUK HALAMAN PROFIL (DESAIN 2) --- */
+        /* ---------------------------------------------------------------------- */
+        
+        .profile-layout {
+            display: flex;
+            min-height: 95vh;
+            background-color: var(--background-gray-soft);
+        }
+
+        /* B.1. Sidebar Nav */
+        .sidebar {
+            width: 250px;
+            padding: 20px 0;
+            background-color: var(--background-light);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px 30px;
+        }
+
+        .sidebar-header img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .sidebar-nav a.active {
+            background-color: var(--background-gray-soft);
+            color: var(--primary-blue);
+            font-weight: 600;
+            border-left: 3px solid var(--primary-blue);
+            padding-left: 17px;
+        }
+        
+        .sidebar-nav i {
+            width: 30px;
+            text-align: center;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* B.2. Profile Content */
+        .profile-content {
+            flex-grow: 1;
+            padding: 40px;
+        }
+
+        .profile-content h1 {
+            font-size: 32px;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+        
+        .profile-content .subtitle {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+        }
+
+        /* Profile Header */
+        .profile-header-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--background-light);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .profile-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-details img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .profile-details h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .profile-details p {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .profile-header-card .edit-button {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .profile-header-card .edit-button:hover {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        /* Sections: Appointments & Preferences */
+        .content-section h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .content-section:first-child h3 {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        /* Appointments */
+        .appointment-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .appointment-item i {
+            font-size: 24px;
+            color: var(--primary-blue);
+            margin-right: 15px;
+            width: 30px;
+        }
+
+        .appointment-item .status {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .appointment-item .time {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        /* Preferences & Notifications */
+        .preference-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .preference-label {
+            line-height: 1.2;
+        }
+
+        .preference-label .detail {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .preference-value {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Toggle Switch for Notifications (Styling Sederhana) */
+        .toggle-switch input {
+            display: none;
+        }
+
+        .toggle-switch label {
+            display: block;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .toggle-switch label::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+
+        .toggle-switch input:checked + label {
+            background-color: var(--primary-blue);
+        }
+
+        .toggle-switch input:checked + label::after {
+            transform: translateX(20px);
+        }
+
+        /* ---------------------------------------------------------------------- */
+        /* --- Responsiveness --- */
+        /* ---------------------------------------------------------------------- */
+        @media (max-width: 900px) {
+            .profile-layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            }
+            .sidebar-nav {
+                display: flex;
+                overflow-x: auto;
+                padding: 0 20px;
+            }
+            .sidebar-nav a {
+                flex-shrink: 0;
+                border-left: none !important;
+                padding: 10px 15px;
+            }
+            .sidebar-nav a.active {
+                border-bottom: 3px solid var(--primary-blue);
+                border-left: none;
+                padding-left: 15px;
+            }
+            .sidebar-header {
+                display: none; /* Sembunyikan header sidebar di mobile */
+            }
+            .profile-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar-consultant {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .navbar-consultant .nav-links {
+                display: none;
+            }
+            .navbar-consultant .cta-button {
+                width: 100%;
+                margin-top: 10px;
+            }
+            .consultant-card {
+                flex-direction: column-reverse;
+                align-items: flex-start;
+                padding: 20px;
+            }
+            .consultant-image {
+                width: 100%;
+                height: 120px;
+                margin-left: 0;
+                margin-bottom: 15px;
+            }
+            .consultant-info {
+                padding-left: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="profile-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://via.placeholder.com/30" alt="Avatar">
+                <span>Mr. Ben Carter</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="#"><i class="fas fa-calendar-alt"></i> Appointments</a>
+                <a href="#"><i class="fas fa-comments"></i> Messages</a>
+                <a href="#" class="active"><i class="fas fa-user"></i> Profile</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+            </nav>
+        </aside>
+
+        <main class="profile-content">
+            <h1>Profile</h1>
+            <p class="subtitle">Manage your profile details and preferences</p>
+            
+            <div class="profile-header-card">
+                <div class="profile-details">
+                    <img src="https://via.placeholder.com/60/f7e0d7" alt="Sophia Avatar">
+                    <div>
+                        <h2>Mr. Ben Carter</h2>
+                        <p>Joined in 2022</p>
+                    </div>
+                </div>
+                <button class="edit-button">Edit Profile</button>
+            </div>
+            
+            <div class="content-section">
+                <h3>Appointments</h3>
+                
+                <div class="appointment-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <div>
+                        <div class="status">Upcoming Appointment</div>
+                        <div class="time">October 26, 2024, 10:00 AM</div>
+                    </div>
+                </div>
+                
+                <div class="appointment-item">
+                    <i class="fas fa-calendar-day"></i>
+                    <div>
+                        <div class="status">Past Appointment</div>
+                        <div class="time">October 19, 2024, 2:00 PM</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3>Preferences</h3>
+
+                <div class="preference-item">
+                    <div class="preference-label">
+                        Language
+                        <div class="detail">English</div>
+                    </div>
+                    <div class="preference-value">English</div>
+                </div>
+
+                <div class="preference-item">
+                    <div class="preference-label">
+                        Timezone
+                        <div class="detail">GMT+7</div>
+                    </div>
+                    <div class="preference-value">GMT+7</div>
+                </div>
+
+                <div class="preference-item">
+                    <div class="preference-label">
+                        Notifications
+                        <div class="detail">Email</div>
+                    </div>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="notification-toggle" checked>
+                        <label for="notification-toggle"></label>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    
+</body>
+</html>
